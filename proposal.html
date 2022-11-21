@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon/doc/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon/doc/favicon-16x16.png" sizes="16x16" />
+
+    <title>Sokoban | Proposal </title>
+    <style>
+        :root {
+            scroll-behavior: smooth;
+        }
+
+        .center-horizonally {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .columns-container {
+            width: 100%;
+
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+        }
+
+        .columns-container div {
+            width: 50%;
+        }
+
+        .blurred-edge {
+            box-shadow: 0 18px 22px 33px white inset;
+        }
+
+        #logo {
+            background-image: url("images/logo_idea_2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            margin: 0 auto;
+            margin-bottom: 2rem;
+            width: 550px;
+            height: 200px;
+        }
+
+        body {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 1rem;
+
+            font-family: serif;
+            font-size: large;
+        }
+
+        main {
+            line-height: 1.35em;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: .8rem;
+        }
+
+        ul {
+            margin-top: .7rem;
+        }
+
+        footer {
+            font-style: italic;
+            text-align: center;
+        }
+
+        time {
+            font-size: smaller;
+            font-style: normal;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        main img {
+            max-width: 100%;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+            margin: 1em 0;
+        }
+
+        code {
+            font-family: monospace;
+            background-color: rgb(230, 230, 230);
+        }
+
+        a,
+        a:link {
+            color: rgb(77, 132, 235);
+        }
+
+        a:visited {
+            color: rgb(51, 70, 247);
+        }
+
+        a:focus,
+        a:hover {
+            color: rgb(103, 174, 233)
+        }
+
+        a:active {
+            color: rgb(51, 169, 247);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Project 3 Proposal - Sokoban</h1>
+        <hr>
+        <div class="blurred-edge" id="logo"></div>
+        <hr>
+
+    </header>
+    <main>
+        <p>
+            <i>Sōkoban</i>&mdash; the classic Japanese puzzle game where you play as a worker at a box-filled warehouse,
+            pushing boxes around to their correct locations. When moving around this orthogonal
+            world of crates and walls, make sure you don't block yourself (or the boxes) off!
+        </p>
+        <div class="columns-container">
+            <div>
+                <h2>Genre</h2>
+                <p>
+                    Top-down block puzzle game.
+                </p>
+            </div>
+            <div>
+                <h2>Platform</h2>
+                <p>
+                    Desktop browser game, played on a website.
+                </p>
+            </div>
+        </div>
+        <h2>Aesthetic</h2>
+        <p>
+            Aesthetically, I'm aiming for something surreal and geometric&mdash; I'm more interested in making something
+            appealing and minimalistic, realized with simple outlines, shapes, blurring, and shadows (I don't have a
+            dedicated artist to draw detailed sprites, anyway). Since Sokoban is such an abstract, conceptual game,
+            there's a lot of freedom with how you choose to graphically represent it.
+            I've seen a few takes on it but nothing quite like what I'm imagining for this project.
+        </p>
+
+        <p>
+            The audio will be unintrustive but supportive and immersive to the experience. Effects will be
+            subtle, tactile, and fairly abstract/surreal, mirroring the visual style.
+        </p>
+
+        <p>
+            See <a id="concept-art-section-link">concept art</a> below. I plan to modify this heavily&mdash;
+            this is just a loose idea as to the direction I want to go in. Ultimately, hoping to make this look
+            fairly elegant.
+        </p>
+        <h2>Story</h2>
+        <p>
+            No real story&mdash; it's a pretty abstract game. Many incarnations of Sokoban are loosely tied to a story
+            with the warehouse metaphor. In my version, it will simply be the puzzle itself, with zero narrative
+            grounding.
+        </p>
+
+        <p>
+            Lacking an underlying narrative, the player is motivated purely by the puzzle. Figuring things out results
+            in that
+            "a-ha" moment which is a great source of encouragement for the player.
+        </p>
+        <h2>Gameplay</h2>
+        <p>
+            Sokoban has only 1 mechanic, a <i>move</i>, that can be realized in two ways. Either you move onto an empty
+            tile, allowing further navigation of the level, or you move into an unobstructed box, pushing it,
+            fundamentally changing the layout of the level.
+        </p>
+        <p>
+            The player has only 4 gameplay controls (keyboard cursor keys / WASD), which correspond to the 4
+            orthographic directions of movement. There will also be a button to restart the level.
+            This encompasses my basic scope for this project, but I
+            could additionally add a basic UI and level switching as well if time permits.
+        </p>
+        <p>
+            The player learns to play the game by completing the levels in order. The levels increase in progressive
+            difficulty, and through their design the player is implicitly taught the basic concepts of the game. Since
+            the penalty for failure is low, even the first levels will seem tough at first.
+        </p>
+        <p>
+            With regards to the levels&mdash; I will create a function that parses a text file into level data. Since
+            numerous Sokoban levels already exist in the public domain, converted to textual data, I can simply use
+            these. I may also design my some levels of my own, but regardless, level design will not comprise a
+            substantial time budget.
+        </p>
+        <h2>Other</h2>
+        <p>
+            I will be using PixiJS for the rendering framework and I may use a CSS framework like <a target="_blank"
+                href="https://bulma.io/">Bulma</a>.
+        </p>
+        <h2>About me</h2>
+        <p>
+            I'm Freddie — second-year student in RIT's Game Design and Development major program. I'm interested in
+            computer science and software programming, game physics, graphic design, level design, and technology in
+            general.
+        </p>
+        </div>
+        <hr>
+
+        <section id="concept-art-section">
+            <div class="center-horizonally">
+                <img class="concept-art" src="images/sokoban_rough_concept.png" alt="Rough concept art of Sokoban">
+            </div>
+            <div class="center-horizonally">
+                <img class="concept-art" src="images/sokoban_tile_types.png" alt="Tile ideas for Sokoban">
+            </div>
+        </section>
+        <hr>
+
+        <h2>Credit</h2>
+        <ul>
+            <li>
+                Mockup logo font credit: <a target="_blank" href="https://fonts.adobe.com/fonts/mason-sans">Mason Sans
+                    Regular</a>.
+            </li>
+            <li>All art on this page is done by me.</li>
+            <!-- <li>Game rendering framework: <a target="_blank" href="https://pixijs.com/">PixiJS</a></li> -->
+        </ul>
+        <hr>
+
+    </main>
+    <footer>
+        <p>Frederick Basken <time>2022</time></p>
+    </footer>
+
+    <script>
+        document.querySelector("#concept-art-section-link").onclick = function () {
+            document.querySelector("#concept-art-section").scrollIntoView();
+        };
+    </script>
+</body>
+
+</html>
