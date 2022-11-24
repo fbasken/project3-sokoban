@@ -1,0 +1,5 @@
+= SOKOBAN =
+
+
+FUTURE
+    make window size to screen
