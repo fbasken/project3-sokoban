@@ -1,6 +1,8 @@
 = SOKOBAN =
-    animate the movements of objects and player
-    custom level support
+    levels should have an isValid property
     menu with blur effect
     level transition
     audio !
+
+WISHLIST
+    animate the movements of objects and player

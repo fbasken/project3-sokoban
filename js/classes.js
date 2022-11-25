@@ -45,11 +45,13 @@ class Box extends PIXI.Graphics {
     }
 
     update() {
+        // Check if on a goal
         this.onGoal = level.isLoaded && level.map[this.row][this.col] == ".";
 
+        // Redraw box based on game state
         this.clear();
         if (this.onGoal) {
-            if (checkVictory()) {
+            if (level.isVictory) {
                 this.beginFill(colorWon);
             }
             else {
@@ -136,15 +138,14 @@ class Player extends PIXI.Graphics {
                 // If the box was pushed successfully
                 if (box.pushBox(rows, cols)) {
                     // Check to see if you won
-                    checkVictory();
-                    updateAllBoxes();
+                    level.checkVictory();
 
-                    // Move into where it was pushed
+                    // Move into where it was pushed (break;)
                     break;
                 }
                 // Otherwise, the box was not pushed successfully
                 else {
-                    // Do not move
+                    // Do not move (return;)
                     return;
                 }
             }
@@ -159,12 +160,17 @@ class Level {
     constructor() {
         this.boxList = [];
         this.isLoaded = false;
+        this.isVictory = false;
+        this.isValid = false;
     }
 
     /// Parses a run-length encoded standard Sokoban level string into a 2D map
-    parseLevelString(levelString) {
-        // Level is not loaded
+    loadLevelFromString(levelString) {
+        // Level is not loaded or valid
         this.isLoaded = false;
+
+        // Level hasn't been won
+        this.isVictory = false;
 
         // Level 2D array
         this.map = [];
@@ -309,7 +315,39 @@ class Level {
         // Mark level as loaded
         this.isLoaded = true;
 
-        updateAllBoxes();
+        // Update all the boxes
+        this.boxList.forEach((box) => { box.update(); });
+
+        // Check if the level is invalid
+        if (!this.map ||
+            this.map.length <= 1 ||
+            !this.playerSpawnRow ||
+            this.boxList.length == 0) {
+            // Mark the level as invalid
+            this.isValid = false;
+        }
+        else{
+            this.isValid = true;
+        }
     }
 
+    checkVictory() {
+        // Check every box in the level
+        for (const box of this.boxList) {
+            // If ANY box isn't on a goal, this isn't a victory
+            if (!box.onGoal) {
+                this.isVictory = false;
+
+                // Update all the boxes
+                this.boxList.forEach((box) => { box.update(); });
+                return;
+            }
+        }
+
+        // Otherwise, victory!
+        this.isVictory = true;
+
+        // Update all the boxes
+        this.boxList.forEach((box) => { box.update(); });
+    }
 }

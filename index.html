@@ -6,22 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Favicons -->
     <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
 
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/main.css">
 
-
+    <!-- JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.8/browser/pixi.js"
         integrity="sha512-XXMxz8zewBFGz0m+NWmtDDUAmmhEQSMPT3F4ETxwc4I/BDGElA0CWEWAZDON/U+LkJWg7yCPL67wV7HDLdrXCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+        integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/util.js"></script>
     <script src="js/classes.js"></script>
     <script src="js/app.js"></script>
 
+    <!-- Title -->
     <title>[ sokoban ]</title>
 </head>
 
@@ -36,11 +43,25 @@
                     src="images/icons/icons8-right-angle-parentheses-key-96.png" alt="&gt;"> to change levels.
             </div>
             <div id="credit">
-                <p>Frederick Basken 2022</p>
+                <p><i>Frederick Basken</i> 2022 &bull; <a href="/doc.html" target="_blank">About</a></p>
                 <div id="small-credit">
                     <p>Microban levels by David Skinner</p>
                     <p>Icons by <a href="https://icons8.com/" target="_blank">Icons8</a></p>
                 </div>
+            </div>
+            <div id="level-entry" class="field is-grouped">
+                <textarea class="textarea is-small has-fixed-size"
+                    placeholder="Enter level data... (supports run-length encoding)"></textarea>
+                <button id="submitButton" class="button is-outlined" disabled>
+                    <span class="icon is-small">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </button>
+                <!-- <button id="deleteButton" class="button" disabled>
+                    <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </button> -->
             </div>
         </div>
     </main>

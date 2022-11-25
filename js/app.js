@@ -2,6 +2,8 @@
 
 // DOM
 let appDiv;
+let inputTextArea;
+let inputTextAreaSubmit;
 
 // Scene vars
 let app;
@@ -48,8 +50,14 @@ window.onload = (e) => {
         // Levels are separated by a comma (and return + newline)
         levelStrings = textContent.split(",\r\n");
 
+        // Get app div
         appDiv = document.querySelector("#app");
 
+        // Get input text area form elements
+        inputTextArea = document.querySelector("#level-entry textarea");
+        inputTextAreaSubmit = document.querySelector("#level-entry button");
+
+        // Create app and append to the page
         app = new PIXI.Application({
             // width: 1000,
             // height: 600
@@ -57,6 +65,7 @@ window.onload = (e) => {
         });
         appDiv.appendChild(app.view);
 
+        // When loaded, start the game
         app.loader.onComplete.add(setup);
         app.loader.load();
     });
@@ -88,36 +97,66 @@ function setup() {
     antiAliasingFilter.resolution = 1;
 
     restartLevel();
-    // // Load level
-    // level = new Level();
-    // level.parseLevelString(levelStrings[0]);
-
-    // // Create player
-    // player = new Player(level.playerSpawnRow, level.playerSpawnCol);
-    // player.zIndex = 3;
-    // gameScene.addChild(player);
-
-    // window.addEventListener('resize', resizeGameWindow);
-    // window.addEventListener('click', resizeGameWindow);
 
     keyState("w").press = move;
     keyState("s").press = move;
     keyState("a").press = move;
     keyState("d").press = move;
     keyState("r").press = restartLevel;
-    keyState(".").press = nextLevel;
-    keyState(",").press = prevLevel;
+    keyState(".").press = () => { loadLevel(levelIndex + 1) };
+    keyState(",").press = () => { loadLevel(levelIndex - 1) };
 
-    // Ensure the game window matches the screen size
+    // Every frame, resize the game window
     app.ticker.add(resizeGameWindow);
+
+    // Check whenever a key is pressed in the input field
+    inputTextArea.addEventListener("keyup", (event) => {
+        // If there's non-whitespace entered
+        if (inputTextArea.value.trim()) {
+            // Enable the submit button
+            inputTextAreaSubmit.disabled = false;
+            inputTextAreaSubmit.classList.add("is-success");
+        }
+        else {
+            // Disable submit button
+            inputTextAreaSubmit.disabled = true;
+            inputTextAreaSubmit.classList.remove("is-success");
+        }
+    });
+
+    // If the submit box is clicked, load the level
+    inputTextAreaSubmit.addEventListener("click", (event) => {
+        // Record the current level index
+        let currentLevelIndex = levelIndex;
+
+        // Read in the input and add it to the level list
+        levelStrings.push(inputTextArea.value.trim());
+        // Load it (it's the last level)
+        loadLevel(levelStrings.length - 1);
+
+        // If the level that was loaded was invalid
+        if (!level.isValid) {
+            // Remove this level and load the current one
+            levelStrings.pop();
+            loadLevel(currentLevelIndex);
+        }
+
+        // Clear out the textarea
+        inputTextArea.value = "";
+
+        // Disable submit button
+        inputTextAreaSubmit.disabled = true;
+        inputTextAreaSubmit.classList.remove("is-success");
+    });
 }
 
 function restartLevel() {
     // Remove all children from the gameScene
     removeAllChildren(gameScene);
 
+    // Reload the level
     level = new Level();
-    level.parseLevelString(levelStrings[levelIndex]);
+    level.loadLevelFromString(levelStrings[levelIndex]);
 
     // Create player
     player = new Player(level.playerSpawnRow, level.playerSpawnCol);
@@ -125,27 +164,12 @@ function restartLevel() {
     gameScene.addChild(player);
 }
 
-function nextLevel() {
-    levelIndex++;
-    levelIndex = Math.min(levelIndex, levelStrings.length - 1);
+function loadLevel(index) {
+    // Ensure index is a valid index
+    index = Math.max(index, 0);
+    index = Math.min(index, levelStrings.length - 1);
+    levelIndex = index;
     restartLevel();
-}
-function prevLevel() {
-    levelIndex--;
-    levelIndex = Math.max(levelIndex, 0);
-    restartLevel();
-}
-
-function checkVictory() {
-    // Check every box in the level
-    for (const box of level.boxList) {
-        // If it's not on a goal, this isn't a victory
-        if (!box.onGoal) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 /// Scales the level to fit the game window, and centers it
@@ -179,8 +203,6 @@ function resizeGameWindow() {
 
     // Scale
     gameScene.scale.set(currentZoomFactor);
-
-
 }
 
 function move(key) {
@@ -207,82 +229,3 @@ function move(key) {
             break;
     }
 }
-
-/// Update all boxes
-function updateAllBoxes() {
-    level.boxList.forEach((box) => {
-        box.update();
-    });
-}
-
-/// Returns a key object which is bound to keyup/down event listeners
-/// Code slightly modified from https://github.com/kittykatattack/learningPixi#keyboard
-function keyState(value) {
-    const key = {};
-    key.value = value;
-    key.isDown = false;
-
-    key.press = undefined;
-    key.release = undefined;
-
-    key.downHandler = (event) => {
-        if (event.key === key.value) {
-            if (!key.isDown && key.press) {
-                key.press(key.value);
-            }
-            key.isDown = true;
-            event.preventDefault();
-        }
-    };
-
-    //The `upHandler`
-    key.upHandler = (event) => {
-        if (event.key === key.value) {
-            if (key.isDown && key.release) {
-                key.release(key.value);
-            }
-            key.isDown = false;
-            event.preventDefault();
-        }
-    };
-
-    //Attach event listeners
-    const downListener = key.downHandler.bind(key);
-    const upListener = key.upHandler.bind(key);
-
-    window.addEventListener("keydown", downListener, false);
-    window.addEventListener("keyup", upListener, false);
-
-    return key;
-}
-
-function readTextFile(filePath, callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", filePath);
-    xhr.onload = () => {
-        let content = xhr.responseText;
-        // console.log(content);
-        callback(content);
-    }
-    xhr.onerror = () => {
-        console.log("Error while reading file: " + filePath);
-        // return;
-    }
-    xhr.send();
-}
-
-/// Removes all child objects from this PixiJS Object
-function removeAllChildren(pixiObj) {
-    // Adapted from https://stackoverflow.com/a/55037616
-    while (pixiObj.children[0]) {
-        pixiObj.removeChild(pixiObj.children[0]);
-    }
-}
-
-// From https://stackoverflow.com/a/8876069
-// function getViewportWidth() {
-//     return Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-// }
-// function getViewportHeight() {
-//     return Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-// }
