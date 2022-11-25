@@ -1,5 +1,6 @@
 = SOKOBAN =
-
-
-FUTURE
-    make window size to screen
+    animate the movements of objects and player
+    custom level support
+    menu with blur effect
+    level transition
+    audio !

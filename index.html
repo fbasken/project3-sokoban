@@ -10,7 +10,11 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
 
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/main.css">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.8/browser/pixi.js"
         integrity="sha512-XXMxz8zewBFGz0m+NWmtDDUAmmhEQSMPT3F4ETxwc4I/BDGElA0CWEWAZDON/U+LkJWg7yCPL67wV7HDLdrXCw=="
@@ -20,9 +24,25 @@
 
     <title>[ sokoban ]</title>
 </head>
+
 <body>
     <main>
-        <div id="app"></div>
+        <div id="app">
+            <div id="instructions">Use <img src="images/icons/icons8-w-key-96.png" alt="W"><img
+                    src="images/icons/icons8-a-key-96.png" alt="A"><img src="images/icons/icons8-s-key-96.png"
+                    alt="S"><img src="images/icons/icons8-d-key-96.png" alt="D"> to move. <img
+                    src="images/icons/icons8-r-key-96.png" alt="R"> to restart. <img
+                    src="images/icons/icons8-left-angle-parentheses-key-96.png" alt="&lt;"> and <img
+                    src="images/icons/icons8-right-angle-parentheses-key-96.png" alt="&gt;"> to change levels.
+            </div>
+            <div id="credit">
+                <p>Frederick Basken 2022</p>
+                <div id="small-credit">
+                    <p>Microban levels by David Skinner</p>
+                    <p>Icons by <a href="https://icons8.com/" target="_blank">Icons8</a></p>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 
