@@ -125,7 +125,7 @@ function setup() {
     stage.addChild(menuCard);
 
     // Load first level
-    loadLevel(0);
+    restartLevel();
 
     // Initialize input functionality
     document.addEventListener('keydown', processKeyInputs);
@@ -213,7 +213,7 @@ function loadLevel(index) {
     // Ensure index is a valid index
     index = Math.max(index, 0);
     index = Math.min(index, levelStrings.length - 1);
-    
+
     // If changing levels, play a sound
     if (index > levelIndex) {
         soundChange.rate(1.1);
@@ -223,6 +223,10 @@ function loadLevel(index) {
         soundChange.rate(0.9);
         soundChange.play();
     }
+    else {
+        return;
+    }
+
     // Set the current level
     levelIndex = index;
 
