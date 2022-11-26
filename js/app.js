@@ -10,6 +10,7 @@ let app;
 let stage;
 
 let gameScene;
+let menuCard;
 let background;
 
 let targetZoomFactor = 1;
@@ -38,11 +39,13 @@ let colorWon = 0xFFD700;
 
 let colorDarknessDifference = 0x131313;
 
-
+// Filters
 let blurFilter = new PIXI.filters.BlurFilter();
 let antiAliasingFilter = new PIXI.filters.FXAAFilter();
+let crtFilter = new PIXI.filters.CRTFilter(PIXI.filters.CRTFilter.defaults);
 
-
+// Audio
+let soundGoal, soundMove, soundVictory, soundRestart, soundChange;
 // ON LOAD
 window.onload = (e) => {
     // Wait until level file has been parsed before loading the game
@@ -73,6 +76,27 @@ window.onload = (e) => {
 };
 
 function setup() {
+    // Load Sounds
+    soundMove = new Howl({
+        src: ['audio/move.mp3']
+    });
+
+    soundGoal = new Howl({
+        src: ['audio/goal.mp3']
+    });
+
+    soundVictory = new Howl({
+        src: ['audio/victory.mp3']
+    });
+
+    soundRestart = new Howl({
+        src: ['audio/restart.mp3']
+    });
+
+    soundChange = new Howl({
+        src: ['audio/change.mp3']
+    });
+
     // Alias the stage
     stage = app.stage;
 
@@ -96,15 +120,28 @@ function setup() {
     blurFilter.blur = 0;
     antiAliasingFilter.resolution = 1;
 
-    restartLevel();
+    // Create menu card
+    menuCard = new PIXI.Container();
+    stage.addChild(menuCard);
 
-    keyState("w").press = move;
-    keyState("s").press = move;
-    keyState("a").press = move;
-    keyState("d").press = move;
-    keyState("r").press = restartLevel;
-    keyState(".").press = () => { loadLevel(levelIndex + 1) };
-    keyState(",").press = () => { loadLevel(levelIndex - 1) };
+    // Load first level
+    loadLevel(0);
+
+    // Initialize input functionality
+    document.addEventListener('keydown', processKeyInputs);
+    // keyState("w").press = move;
+    // keyState("s").press = move;
+    // keyState("a").press = move;
+    // keyState("d").press = move;
+    // keyState("r").press = restartLevel;
+    keyState(".").press = () => {
+        // Next level
+        loadLevel(levelIndex + 1)
+    };
+    keyState(",").press = () => {
+        // Prev level
+        loadLevel(levelIndex - 1)
+    };
 
     // Every frame, resize the game window
     app.ticker.add(resizeGameWindow);
@@ -122,6 +159,10 @@ function setup() {
             inputTextAreaSubmit.disabled = true;
             inputTextAreaSubmit.classList.remove("is-success");
         }
+
+        // Resize input area to fit text
+        inputTextArea.style.height = "1px";
+        inputTextArea.style.height = (8 + inputTextArea.scrollHeight) + "px";
     });
 
     // If the submit box is clicked, load the level
@@ -143,6 +184,8 @@ function setup() {
 
         // Clear out the textarea
         inputTextArea.value = "";
+        // Set it back to normal size
+        inputTextArea.removeAttribute("style");
 
         // Disable submit button
         inputTextAreaSubmit.disabled = true;
@@ -150,6 +193,7 @@ function setup() {
     });
 }
 
+/// Reloads the current level
 function restartLevel() {
     // Remove all children from the gameScene
     removeAllChildren(gameScene);
@@ -164,11 +208,25 @@ function restartLevel() {
     gameScene.addChild(player);
 }
 
+/// Load the level at the specified index
 function loadLevel(index) {
     // Ensure index is a valid index
     index = Math.max(index, 0);
     index = Math.min(index, levelStrings.length - 1);
+    
+    // If changing levels, play a sound
+    if (index > levelIndex) {
+        soundChange.rate(1.1);
+        soundChange.play();
+    }
+    else if (index < levelIndex) {
+        soundChange.rate(0.9);
+        soundChange.play();
+    }
+    // Set the current level
     levelIndex = index;
+
+    // Restart the level
     restartLevel();
 }
 
@@ -205,27 +263,57 @@ function resizeGameWindow() {
     gameScene.scale.set(currentZoomFactor);
 }
 
-function move(key) {
-    switch (key) {
-        // Up
-        case "w":
-            player.move(-1, 0);
-
-            break;
-        // Down
-        case "s":
-            player.move(1, 0);
-
-            break;
-        // Left
-        case "a":
-            player.move(0, -1);
-
-            break;
-        // Right
-        case "d":
-            player.move(0, 1);
-
-            break;
+function processKeyInputs(key) {
+    // W or Up arrow
+    if (key.keyCode === 87 || key.keyCode === 38) {
+        player.move(-1, 0);
     }
+
+    // S or Down arrow
+    if (key.keyCode === 83 || key.keyCode === 40) {
+        player.move(1, 0);
+    }
+
+    // A or Left arrow
+    if (key.keyCode === 65 || key.keyCode === 37) {
+        player.move(0, -1);
+    }
+
+    // D or Right arrow
+    if (key.keyCode === 68 || key.keyCode === 39) {
+        player.move(0, 1);
+    }
+
+    // R
+    if (key.keyCode === 82) {
+        // Play sound with random pitch
+        soundRestart.rate(Math.random() * 0.5 + 0.75);
+        soundRestart.play();
+
+        restartLevel();
+    }
+
+    // Old logic
+    // switch (key) {
+    //     // Up
+    //     case "w":
+    //         player.move(-1, 0);
+
+    //         break;
+    //     // Down
+    //     case "s":
+    //         player.move(1, 0);
+
+    //         break;
+    //     // Left
+    //     case "a":
+    //         player.move(0, -1);
+
+    //         break;
+    //     // Right
+    //     case "d":
+    //         player.move(0, 1);
+
+    //         break;
+    // }
 }

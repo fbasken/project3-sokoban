@@ -9,6 +9,16 @@ body {
 
     /* Hide scroll bars */
     overflow: hidden;
+    -ms-overflow-style: none;
+    /* for Internet Explorer, Edge */
+    scrollbar-width: none;
+    /* for Firefox */
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    /* for Chrome, Safari, and Opera */
 }
 
 main {
@@ -48,6 +58,7 @@ main {
 
     margin: .5rem;
     height: 2rem;
+    --key-icon-height: 1.3rem;
 
     font-size: .85rem;
     font-family: sans-serif;
@@ -58,15 +69,19 @@ main {
 }
 
 #app img {
-    height: 1.3rem;
+    height: var(--key-icon-height);
     position: relative;
-    top: .22rem;
+    top: .29rem;
     margin: 0 -.05rem;
+
+    transition: all .2s;
 }
 
 #app #instructions:hover {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: sans-serif;
+
+    --key-icon-height: 1.9rem;
 
     opacity: 80%;
 }
@@ -117,9 +132,14 @@ main {
     opacity: 80%;
 }
 
-#app textarea{
-    min-height: 2.5rem;
+#app #level-entry textarea {
+    min-height: 0;
+    height: 2.5rem;
     margin-right: .2rem;
+}
+
+.button[disabled] {
+    cursor: default;
 }
 
 a {

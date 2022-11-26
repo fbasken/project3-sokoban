@@ -24,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
         integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
     <script src="js/util.js"></script>
     <script src="js/classes.js"></script>
     <script src="js/app.js"></script>
@@ -47,11 +48,14 @@
                 <div id="small-credit">
                     <p>Microban levels by David Skinner</p>
                     <p>Icons by <a href="https://icons8.com/" target="_blank">Icons8</a></p>
+                    <p>
+                        Sounds from <a href="https://mixkit.co/free-sound-effects/game/" target="_blank">mixkit.co</a>
+                    </p>
                 </div>
             </div>
             <div id="level-entry" class="field is-grouped">
                 <textarea class="textarea is-small has-fixed-size"
-                    placeholder="Enter level data... (supports run-length encoding)"></textarea>
+                    placeholder="Enter valid level data... (supports run-length encoding)"></textarea>
                 <button id="submitButton" class="button is-outlined" disabled>
                     <span class="icon is-small">
                         <i class="fas fa-check"></i>

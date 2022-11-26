@@ -71,7 +71,16 @@ class Box extends PIXI.Graphics {
         this.x = col * gridSize;
         this.y = row * gridSize;
 
+        let wasOnGoal = this.onGoal;
+
         this.update();
+
+        // If we went from being off a goal to being on a goal
+        if (this.onGoal && !wasOnGoal) {
+            // Play goal sound with random pitch
+            soundGoal.rate(Math.random() * 0.5 + 0.75);
+            soundGoal.play();
+        }
     }
 
     isWallInPath(rows, cols) {
@@ -126,6 +135,18 @@ class Player extends PIXI.Graphics {
 
     /// Move the player the provided number of rows and columns, pushing any unobstructed boxes in the way
     move(rows, cols) {
+        // If player won, don't move any more
+        if (level.isVictory)
+        {
+            return;
+        }
+
+        // Check if player is going out-of-bounds
+        if (!level.map[this.row + rows] || !level.map[this.row + rows][this.col + cols]) {
+            console.log("Player attempted to go out of bounds!");
+            return;
+        }
+
         // If this is a wall, don't move
         if (level.map[this.row + rows][this.col + cols] == "#") {
             return;
@@ -153,6 +174,10 @@ class Player extends PIXI.Graphics {
 
         // Move
         this.setPos(this.row + rows, this.col + cols);
+
+        // Play sound with random pitch
+        soundMove.rate(Math.random() * 0.5 + 0.75);
+        soundMove.play();
     }
 }
 
@@ -320,13 +345,14 @@ class Level {
 
         // Check if the level is invalid
         if (!this.map ||
-            this.map.length <= 1 ||
+            this.mapColCount <= 2 ||
+            this.mapRowCount <= 2 ||
             !this.playerSpawnRow ||
             this.boxList.length == 0) {
             // Mark the level as invalid
             this.isValid = false;
         }
-        else{
+        else {
             this.isValid = true;
         }
     }
@@ -346,6 +372,10 @@ class Level {
 
         // Otherwise, victory!
         this.isVictory = true;
+
+        // Play victory sound
+        soundVictory.rate(Math.random() * 0.3 + 0.85);
+        soundVictory.play();
 
         // Update all the boxes
         this.boxList.forEach((box) => { box.update(); });
