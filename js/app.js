@@ -133,7 +133,13 @@ function setup() {
     // keyState("s").press = move;
     // keyState("a").press = move;
     // keyState("d").press = move;
-    // keyState("r").press = restartLevel;
+    keyState("r").press = () => {
+        // Play sound with random pitch
+        soundRestart.rate(Math.random() * 0.5 + 0.75);
+        soundRestart.play();
+        
+        restartLevel();
+    };
     keyState(".").press = () => {
         // Next level
         loadLevel(levelIndex + 1)
@@ -288,14 +294,14 @@ function processKeyInputs(key) {
         player.move(0, 1);
     }
 
-    // R
-    if (key.keyCode === 82) {
-        // Play sound with random pitch
-        soundRestart.rate(Math.random() * 0.5 + 0.75);
-        soundRestart.play();
+    // // R
+    // if (key.keyCode === 82) {
+    //     // Play sound with random pitch
+    //     soundRestart.rate(Math.random() * 0.5 + 0.75);
+    //     soundRestart.play();
 
-        restartLevel();
-    }
+    //     restartLevel();
+    // }
 
     // Old logic
     // switch (key) {
