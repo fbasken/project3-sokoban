@@ -2,6 +2,7 @@
 
 // DOM
 let appDiv;
+let instructionsDiv;
 let inputTextArea;
 let inputTextAreaSubmit;
 
@@ -55,6 +56,9 @@ window.onload = (e) => {
 
         // Get app div
         appDiv = document.querySelector("#app");
+
+        // Get instructions div
+        instructionsDiv = document.querySelector("#instructions");
 
         // Get input text area form elements
         inputTextArea = document.querySelector("#level-entry textarea");
@@ -137,7 +141,7 @@ function setup() {
         // Play sound with random pitch
         soundRestart.rate(Math.random() * 0.5 + 0.75);
         soundRestart.play();
-        
+
         restartLevel();
     };
     keyState(".").press = () => {
@@ -292,6 +296,11 @@ function processKeyInputs(key) {
     // D or Right arrow
     if (key.keyCode === 68 || key.keyCode === 39) {
         player.move(0, 1);
+    }
+
+    // Check if the user hasn't hidden the instructions dialog -- if they haven't, hide it
+    if (appDiv.className == "show-hints") {
+        appDiv.classList.remove("show-hints");
     }
 
     // // R

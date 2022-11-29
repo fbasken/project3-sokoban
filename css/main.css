@@ -77,7 +77,8 @@ main {
     transition: all .2s;
 }
 
-#app #instructions:hover {
+#app #instructions:hover,
+#app.show-hints #instructions {
     font-size: 1.2rem;
     font-family: sans-serif;
 
@@ -96,7 +97,7 @@ main {
     font-family: sans-serif;
     text-align: right;
 
-    opacity: 20%;
+    opacity: 40%;
 
     transition: all .2s;
 }
@@ -105,11 +106,12 @@ main {
     font-size: 85%;
 }
 
-#app #credit:hover {
+#app #credit:hover,
+#app.show-hints #credit {
     font-size: .65rem;
     font-family: sans-serif;
 
-    opacity: 80%;
+    opacity: 90%;
 }
 
 #app #level-entry {
@@ -128,8 +130,9 @@ main {
     transition: all .2s;
 }
 
-#app #level-entry:hover {
-    opacity: 80%;
+#app #level-entry:hover,
+#app.show-hints #level-entry {
+    opacity: 90%;
 }
 
 #app #level-entry textarea {
