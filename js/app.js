@@ -128,6 +128,19 @@ function setup() {
     menuCard = new PIXI.Container();
     stage.addChild(menuCard);
 
+    // Make title
+    // let titleText = new PIXI.Text("SOKOBAN");
+    // titleText.style = new PIXI.TextStyle({
+    //     fill: 0x000000,
+    //     fontSize: 96,
+    //     fontFamily: "Rubik"
+    // });
+    // titleText.x = app.view.width /2;
+    // titleText.y = app.view.height/2 ;
+    // titleText.anchor.set(0.5, 0.5);
+    // titleText.zIndex = 10;
+    // menuCard.addChild(titleText);
+
     // Load first level
     restartLevel();
 
