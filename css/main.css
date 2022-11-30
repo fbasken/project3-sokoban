@@ -5,6 +5,8 @@
 }
 
 body {
+    font-family: 'Rubik', sans-serif !important;
+
     background-color: rgb(20, 20, 20);
 
     /* Hide scroll bars */
@@ -61,7 +63,6 @@ main {
     --key-icon-height: 1.3rem;
 
     font-size: .85rem;
-    font-family: sans-serif;
 
     opacity: 35%;
 
@@ -80,7 +81,6 @@ main {
 #app #instructions:hover,
 #app.show-hints #instructions {
     font-size: 1.2rem;
-    font-family: sans-serif;
 
     --key-icon-height: 1.9rem;
 
@@ -94,7 +94,6 @@ main {
 
     margin: .5rem;
     font-size: .5rem;
-    font-family: sans-serif;
     text-align: right;
 
     opacity: 40%;
@@ -109,7 +108,6 @@ main {
 #app #credit:hover,
 #app.show-hints #credit {
     font-size: .65rem;
-    font-family: sans-serif;
 
     opacity: 90%;
 }
@@ -123,7 +121,6 @@ main {
     width: 25rem;
 
     font-size: .85rem;
-    font-family: sans-serif;
 
     opacity: 30%;
 
@@ -139,6 +136,9 @@ main {
     min-height: 0;
     height: 2.5rem;
     margin-right: .2rem;
+
+    font-family: 'Rubik', sans-serif !important;
+
 }
 
 .button[disabled] {
