@@ -152,11 +152,11 @@ function setup() {
 
         restartLevel();
     };
-    keyState(".").press = () => {
+    keyState("c").press = () => {
         // Next level
         loadLevel(levelIndex + 1)
     };
-    keyState(",").press = () => {
+    keyState("z").press = () => {
         // Prev level
         loadLevel(levelIndex - 1)
     };
