@@ -17,6 +17,9 @@ let background;
 let targetZoomFactor = 1;
 let currentZoomFactor = 0.000001;
 
+let targetBlur = 0;
+let currentBlur = 0;
+
 // Game vars
 let player;
 let level;
@@ -82,23 +85,28 @@ window.onload = (e) => {
 function setup() {
     // Load Sounds
     soundMove = new Howl({
-        src: ['audio/move.mp3']
+        src: ['audio/move.mp3'],
+        volume: 0.5
     });
 
     soundGoal = new Howl({
-        src: ['audio/goal.mp3']
+        src: ['audio/goal.mp3'],
+        volume: 0.35
     });
 
     soundVictory = new Howl({
-        src: ['audio/victory.mp3']
+        src: ['audio/victory.mp3'],
+        volume: 0.5
     });
 
     soundRestart = new Howl({
-        src: ['audio/restart.mp3']
+        src: ['audio/restart.mp3'],
+        volume: 0.7
     });
 
     soundChange = new Howl({
-        src: ['audio/change.mp3']
+        src: ['audio/change.mp3'],
+        volume: 0.5
     });
 
     // Alias the stage
@@ -268,14 +276,46 @@ function resizeGameWindow() {
     if (Math.abs(targetZoomFactor - currentZoomFactor) > 0.0001) {
         // Correct it by only a bit
         currentZoomFactor += (targetZoomFactor - currentZoomFactor) * 0.1;
+
+        // Blur
+        let zoomDiff = Math.abs(currentZoomFactor - targetZoomFactor);
+        blurFilter.blur = zoomDiff * 30;
+
     }
     else {
+        // Stop at the correct value
         currentZoomFactor = targetZoomFactor;
+
+        // Unblur
+        blurFilter.blur = 0;
     }
 
     // Scale
     gameScene.scale.set(currentZoomFactor);
+
+
 }
+
+// function animateOutBlur()
+// {
+
+//     // If there's a substantial difference between the current zoom and the target
+//     if (Math.abs(targetBlur - currentBlur) > 0.0001) {
+//         // Blur
+//         blurFilter.blur = zoomDiff * 50;
+
+//     }
+//     else {
+//         // Stop at the correct value
+//         currentZoomFactor = targetZoomFactor;
+
+//         // Unblur
+//         blurFilter.blur = 0;
+//     }
+
+//     // Scale
+//     gameScene.scale.set(currentZoomFactor);
+// }
 
 function processKeyInputs(key) {
     // W or Up arrow
