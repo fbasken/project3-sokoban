@@ -122,7 +122,7 @@ main {
 
     font-size: .85rem;
 
-    opacity: 30%;
+    opacity: 50%;
 
     transition: all .2s;
 }
@@ -138,7 +138,9 @@ main {
     margin-right: .2rem;
 
     font-family: 'Rubik', sans-serif !important;
+    color: rgb(0, 0, 0);
 
+    border-color: rgb(143, 143, 143);
 }
 
 .button[disabled] {
