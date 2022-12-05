@@ -145,13 +145,51 @@
             project, although his implementation has several features that are out of my scope for this project.
         </p>
         <p>
-            ...
+            When creating the interface for a fairly simple game like Sokoban, I put in a lot of work on smaller things,
+            details that don't stand out but serve to really polish the user experience. For instance, the level
+            input field will resize vertically to fit the text, and then shrink back down after. This also happens when
+            you hit the submit button (which visually changes its enabled state based on the input field). Finally, when
+            you submit a level into the box, some preliminary checks are made, and the level is discarded if it's
+            invalid. For all of this work, what you get is a simple box that behaves how you'd expect it to
+            behave&mdash; and that's how I wanted the user to feel when using the site: unencumbered and undistracted by
+            the interface.
+        </p>
+        <p>
+            To take this attention to detail a level further: the screen is fully resizable, and the app accounts for
+            the difference in the level's aspect ratio and centers the level accordingly. The camera will zoom to match
+            this, easing into the target location. I used a PixiJS&nbsp;<code>BlurFilter</code> to add an effect to
+            this transition as well. I also added a custom favicon like in my last project, and took the customization
+            even further, adding OpenGraph meta tags to the page, visible when the link is pasted somewhere like Slack
+            or Discord.
         </p>
         <p>
             One issue I ran into while developing this game was Javascript's lack of real abstract class support, and
-            furthermore, support for multiple inheritance. I had to repeat the same sections of code, however it was
-            fairly minor. I would definitely choose a different language were I to develop a similar project in the
+            furthermore, lack of support for multiple inheritance. I had to repeat the same sections of code, however it
+            was fairly minor. I would definitely choose a different language were I to develop a similar project in the
             future, probably opting to use TypeScript for its strong typing and support for object-oriented patterns.
+        </p>
+        <p>
+            Upon nearing completion of this project, I realized what was perhaps the largest flaw in my code: my
+            implementation of Sokoban itself. I was so eager to see some results from PixiJS that I just kind of made up
+            the logic as I went along. First I thought: OK, so it's a tile based game&mdash; therefore a 2D array would
+            be the best way to handle this. Then I realized later that the movement of boxes and the player would be an
+            issue here, so I wrote movement in a way that gets around that, and then does a basic "am I still on the
+            grid?" check afterward.
+        </p>
+        <p>
+            This was a mistake&mdash; since PixiJS stores each rectangle as its own <code>PIXI.Graphics</code> object, I
+            could just work with that. Rendering the game from a 2D array might be a solution I'd use with a
+            different framework and/or programming language, but here I could just take every object and give it a row
+            and column integer value, and thus ditch the 2D array. This would alleviate the redundancy
+            where objects both exist as themselves and as a char in the 2D array. While this change isn't something
+            I plan to refactor in, it was an example of something I didn't fully realize and account for, especially
+            given my initial lack of understanding PixiJS.
+        </p>
+        <p>
+            Overall, I'm quite happy with my finished result. While it lacks extensive quality of life features and
+            feature parity to existing Sokoban interfaces, I generally succeeded in setting my scope
+            realistically and delivering a polished product in the aspects that I did implement. In the future, I think
+            I'll account more for the new user experience, and plan out my design/roadmap ahead of time.
         </p>
         <hr>
         <h2>Concept Art</h2>
@@ -170,6 +208,9 @@
 
         <h2>Credit</h2>
         <ul>
+            <p>Note: None of these levels are by me!</p>
+            <li>Microban levels by David Skinner</li>
+            <li>Icons by <a href="https://icons8.com/" target="_blank">Icons8</a></li>
             <li>
                 https://mixkit.co/free-sound-effects/game/
             </li>
