@@ -380,7 +380,7 @@ class Level {
         this.boxList.forEach((box) => { box.update(); });
 
         // Get in the zone.
-        if (Math.random() > 0.95 || levelIndex > 0) {
+        if (Math.random() > 0.85 && levelIndex > 0) {
             document.title = "[ the zen of sokoban ]";
         }
     }
