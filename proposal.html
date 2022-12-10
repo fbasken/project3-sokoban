@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="favicon/doc/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicon/doc/favicon-16x16.png" sizes="16x16" />
 
-    <title>Sokoban | Proposal </title>
+    <title>Sokoban | Documentation & Proposal</title>
     <style>
         :root {
             scroll-behavior: smooth;
@@ -121,13 +121,101 @@
 
 <body>
     <header>
-        <h1>Project 3 Proposal - Sokoban</h1>
+        <h1>Documentation</h1>
         <hr>
         <div class="blurred-edge" id="logo"></div>
         <hr>
 
     </header>
     <main>
+        <p>
+            I was initially unsure what to create for <b>Project 3</b>. I wanted to avoid making any game
+            with 2D physics, as I'd already done games like that before, and I also wanted to avoid spending substantial
+            portions of time on level design. While I love designing levels, I only had limited time for this project
+            and I knew it would be a challenge to work with PixiJS and JavaScript, as they're both relatively new to me.
+        </p>
+        <p>
+            Sokoban turned out to be the perfect solution. It was exactly what I wanted for my project and I had a
+            decent idea of how I wanted to execute it. Coincidentally, my first introduction to Sokoban was through a
+            similar avenue&mdash; a JavaScript rendition of Sokoban by <a href="http://birrell.org/andrew/sokoban/"
+                target="_blank">Andrew Birrell</a>. I don't even remember how I stumbled across this but it's definitely
+            where I first saw the game and it's where I
+            drew a lot of the inspiration for this project. The graphics and overall user experience of Birrell's site,
+            clearly a relic of an earlier era of the internet, were something I was motivated to improve on in this
+            project, although his implementation has several features that are out of my scope for this project.
+        </p>
+        <p>
+            When creating the interface for a fairly simple game like Sokoban, I put in a lot of work on smaller things,
+            details that don't stand out but serve to really polish the user experience. For instance, the level
+            input field will resize vertically to fit the text, and then shrink back down after. This also happens when
+            you hit the submit button (which visually changes its enabled state based on the input field). Finally, when
+            you submit a level into the box, some preliminary checks are made, and the level is discarded if it's
+            invalid. For all of this work, what you get is a simple box that behaves how you'd expect it to
+            behave&mdash; and that's how I wanted the user to feel when using the site: unencumbered and undistracted by
+            the interface.
+        </p>
+        <p>
+            To take this attention to detail a level further: the screen is fully resizable, and the app accounts for
+            the difference in the level's aspect ratio and centers the level accordingly. The camera will zoom to match
+            this, easing into the target location. I used a PixiJS&nbsp;<code>BlurFilter</code> to add an effect to
+            this transition as well. I also added a custom favicon like in my last project, and took the customization
+            even further, adding OpenGraph meta tags to the page, visible when the link is pasted somewhere like Slack
+            or Discord.
+        </p>
+        <p>
+            One issue I ran into while developing this game was Javascript's lack of real abstract class support, and
+            furthermore, lack of support for multiple inheritance. I had to repeat the same sections of code, however it
+            was fairly minor. I would definitely choose a different language were I to develop a similar project in the
+            future, probably opting to use TypeScript for its strong typing and support for object-oriented patterns.
+        </p>
+        <p>
+            Upon nearing completion of this project, I realized what was perhaps the largest flaw in my code: my
+            implementation of Sokoban itself. I was so eager to see some results from PixiJS that I just kind of made up
+            the logic as I went along. First I thought: OK, so it's a tile based game&mdash; therefore a 2D array would
+            be the best way to handle this. Then I realized later that the movement of boxes and the player would be an
+            issue here, so I wrote movement in a way that gets around that, and then does a basic "am I still on the
+            grid?" check afterward.
+        </p>
+        <p>
+            This was a mistake&mdash; since PixiJS stores each rectangle as its own <code>PIXI.Graphics</code> object, I
+            could just work with that. Rendering the game from a 2D array might be a solution I'd use with a
+            different framework and/or programming language, but here I could just take every object and give it a row
+            and column integer value, and thus ditch the 2D array. This would alleviate the redundancy
+            where objects both exist as themselves and as a char in the 2D array. While this change isn't something
+            I plan to refactor in, it was an example of something I didn't fully realize and account for, especially
+            given my initial lack of understanding PixiJS.
+        </p>
+        <p>
+            Overall, I'm quite happy with my finished result. While it lacks extensive quality of life features and
+            feature parity to existing Sokoban interfaces, I generally succeeded in setting my scope
+            realistically and delivering a polished product in the aspects that I did implement. In the future, I think
+            I'll account more for the new user experience, and plan out my design/roadmap ahead of time.
+        </p>
+        <p>
+            <a href=".." target="_blank">Link to the final product</a>
+        </p>
+        <hr>
+
+        <h2>Credit</h2>
+        <ul>
+            <p><i>Note: I did not create the levels for this project. Sokoban level packs are freely available
+                    online.</i></p>
+            <li>Microban levels by David Skinner</li>
+            <li>Icons by <a href="https://icons8.com/" target="_blank">Icons8</a></li>
+            <li>
+                Sounds from <a href="https://mixkit.co/free-sound-effects/game/" target="_blank">mixkit.co</a>
+            </li>
+            <li>
+                Mockup logo font credit: <a target="_blank" href="https://fonts.adobe.com/fonts/mason-sans">Mason Sans
+                    Regular</a>.
+            </li>
+            <li>All art on this page is done by me.</li>
+            <!-- <li>Game rendering framework: <a target="_blank" href="https://pixijs.com/">PixiJS</a></li> -->
+        </ul>
+        <hr>
+        <h1>Project 3 Proposal - Sokoban</h1>
+        <hr>
+
         <p>
             <i>Sōkoban</i>&mdash; the classic Japanese puzzle game where you play as a worker at a box-filled warehouse,
             pushing boxes around to their correct locations. When moving around this orthogonal
@@ -224,17 +312,6 @@
                 <img class="concept-art" src="images/sokoban_tile_types.png" alt="Tile ideas for Sokoban">
             </div>
         </section>
-        <hr>
-
-        <h2>Credit</h2>
-        <ul>
-            <li>
-                Mockup logo font credit: <a target="_blank" href="https://fonts.adobe.com/fonts/mason-sans">Mason Sans
-                    Regular</a>.
-            </li>
-            <li>All art on this page is done by me.</li>
-            <!-- <li>Game rendering framework: <a target="_blank" href="https://pixijs.com/">PixiJS</a></li> -->
-        </ul>
         <hr>
 
     </main>

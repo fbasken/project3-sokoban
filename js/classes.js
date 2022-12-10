@@ -136,8 +136,7 @@ class Player extends PIXI.Graphics {
     /// Move the player the provided number of rows and columns, pushing any unobstructed boxes in the way
     move(rows, cols) {
         // If player won, don't move any more
-        if (level.isVictory)
-        {
+        if (level.isVictory) {
             return;
         }
 
@@ -379,5 +378,10 @@ class Level {
 
         // Update all the boxes
         this.boxList.forEach((box) => { box.update(); });
+
+        // Get in the zone.
+        if (Math.random() > 0.8 || levelIndex > 0) {
+            document.title = "[ the zen of sokoban ]";
+        }
     }
 }
