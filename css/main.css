@@ -62,9 +62,9 @@ main {
     height: 2rem;
     --key-icon-height: 1.3rem;
 
-    font-size: .85rem;
+    font-size: 1rem;
 
-    opacity: 60%;
+    opacity: 80%;
 
     transition: all .2s;
 }
@@ -84,7 +84,7 @@ main {
 
     --key-icon-height: 1.9rem;
 
-    opacity: 80%;
+    opacity: 90%;
 }
 
 #app #credit {
@@ -93,10 +93,10 @@ main {
     right: 0;
 
     margin: .5rem;
-    font-size: .5rem;
+    font-size: .75rem;
     text-align: right;
 
-    opacity: 40%;
+    opacity: 70%;
 
     transition: all .2s;
 }
@@ -107,7 +107,7 @@ main {
 
 #app #credit:hover,
 #app.show-hints #credit {
-    font-size: .65rem;
+    font-size: 1.25rem;
 
     opacity: 90%;
 }
