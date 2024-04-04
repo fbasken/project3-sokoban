@@ -255,8 +255,12 @@ function loadLevel(index) {
 /// Scales the level to fit the game window, and centers it
 function resizeGameWindow() {
 
-    // Compare the aspect ratio of the viewport versus the aspect ratio of the level
-    if ((app.view.width / app.view.height) > (level.mapColCount / level.mapRowCount)) {
+	let viewportAspectRatio = (app.view.width / app.view.height);
+	let levelAspectRatio = (level.mapColCount / level.mapRowCount);
+
+	// Compare the aspect ratio of the viewport versus the aspect ratio of the level
+    if (viewportAspectRatio > levelAspectRatio) {
+
         // Find zoom factor to fit level to screen height
         targetZoomFactor = app.view.height / gridSize / level.mapRowCount;
 
@@ -273,13 +277,16 @@ function resizeGameWindow() {
     }
 
     // If there's a substantial difference between the current zoom and the target
-    if (Math.abs(targetZoomFactor - currentZoomFactor) > 0.0001) {
-        // Correct it by only a bit
-        currentZoomFactor += (targetZoomFactor - currentZoomFactor) * 0.1;
+	const FLOAT_EPSILON = 0.0001;
+	const LERP_PERCENT = 0.1;
+    if (Math.abs(targetZoomFactor - currentZoomFactor) > FLOAT_EPSILON) {
+        // Correct it by only a bit, using a lerp
+        currentZoomFactor += (targetZoomFactor - currentZoomFactor) * LERP_PERCENT;
 
         // Blur
         let zoomDiff = Math.abs(currentZoomFactor - targetZoomFactor);
-        blurFilter.blur = zoomDiff * 30;
+		const BLUR_COEFFICIENT = 30;
+        blurFilter.blur = zoomDiff * BLUR_COEFFICIENT;
 
     }
     else {
@@ -292,8 +299,6 @@ function resizeGameWindow() {
 
     // Scale
     gameScene.scale.set(currentZoomFactor);
-
-
 }
 
 // function animateOutBlur()
